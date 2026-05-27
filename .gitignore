@@ -1,0 +1,25 @@
+# Data and artifacts
+data/
+!data/.gitkeep
+logs/
+*.nc
+*.tar.gz
+*.tmp.nc
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
