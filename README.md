@@ -27,6 +27,21 @@ python -m regional_era5.download --help
 python -m regional_era5.prepare list
 ```
 
+<img width="1368" height="784" alt="regional-era5-chunks-vs-linear-oom-for-tokamind-preprocessing" src="https://github.com/user-attachments/assets/16da9e3b-c6b1-4d7b-83e0-d9cc4d6902f4" />
+### The Memory Bottleneck
+<img width="1368" height="784" alt="regional-era5-chunks-vs-linear-oom-for-tokamind-preprocessing" src="https://github.com/user-attachments/assets/77499f71-814c-40a3-8e00-89af76a83fd4" />
+
+*Figure 1: Traditional data loading approaches (e.g., naïve `xarray.open_dataset`) result in exponential RAM consumption, terminating the kernel before the required regional data can be extracted for model testing.*
+
+When preparing massive environmental and atmospheric datasets (such as global ERA5 NetCDF archives) to simulate physical boundaries, train, or test large foundation models like **TokaMind**, memory efficiency becomes a critical bottleneck. 
+
+Attempting to load these global grid matrices directly into memory using traditional linear methods guarantees an immediate Out-Of-Memory (OOM) crash.
+
+<img width="1600" height="933" alt="global-netcdf-memory-bottleneck-oom-crash-foundation-models" src="https://github.com/user-attachments/assets/f569b669-86c2-4c4a-afce-58442461d57f" />
+*Figure 2: By pre-calculating regional indices and deploying parallel workers, `regional-era5-chunks` maintains $O(1)$ memory complexity. This makes it an essential preprocessing pipeline for extracting localized weather scenarios without overloading the workstation.*
+
+
+
 ---
 
 ## Quick start
